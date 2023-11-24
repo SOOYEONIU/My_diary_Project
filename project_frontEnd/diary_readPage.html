@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="icon" href="./pngFile/studying.png" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+	<!--xeicon-->
+	<link="stylesheet" type="text/css" href="path/to/xeicon/xeicon.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+		<link rel="shortcut icon" type="image/x-icon" href="./pngFile/small_favicon.png" />
+		<title>My diary</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: 'Nanum Gothic', sans-serif;
+				color: #333333;
+			}
+
+			/*날짜 폰트*/
+			@font-face {
+				font-family: 'BookkMyungjo-Bd';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+				font-weight: 900;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'GangwonEdu_OTFBoldA';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			/*다이어리 번호 폰트*/
+			@font-face {
+				font-family: 'RixInooAriDuriR';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			/* daily diary 큰 틀 */
+			.dailyDiary {
+				width: 100vw;
+				height: 100vh;
+				position: relative;
+				background: linear-gradient(45deg, rgba(41, 83, 111, 0.2), rgba(52, 152, 219, 0.2));
+				background: linear-gradient(331deg, rgba(195, 193, 240, 1) 0%, rgba(76, 136, 222, 1) 100%, rgba(255, 255, 255, 0.7359331109550562) 100%);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				/*
+				background: linear-gradient(45deg, Violet, Orange); 
+				*/
+			}
+
+			/* view board */
+			.tempDiary {
+				width: 90vw;
+				height: 90vh;
+				background-color: rgba(255, 255, 255, 0.25);
+				border-radius: 5vh;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -45vw;
+				margin-top: -45vh;
+			}
+			.backColor {
+				width: 100vw; height: 100vh;
+				background-color: rgba(0, 0, 0, 0.7);
+				position: absolute;
+				z-index: 0.5;
+			}
+
+			.checkBox {
+				width: 350px;
+				height: 200px;
+				background-color: white;
+				border-radius: 2vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+				align-items: center;
+				position: absolute;
+				z-index: 1;
+			}
+
+				.circleZone {
+					width: 50px; height: 50px;
+					background-color: #DADBE7;
+					border-radius:25px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+					.xi-trash {
+						font-size: 20px;
+						color: white;
+					}
+				.checkBox > h2 {
+					font-size: 20px;
+					color: #333333;
+				}
+				.deleteMsg {
+					font-size: 15px;
+					color: #666666;
+				}
+				.btnBox > button {
+					width: 150px; height: 35px;
+					border-radius: 17.5px;
+					border: none;
+					font-size: 15px;
+				}
+				.yesBtn {
+					background-color: #1A376E;
+					color: white;
+				}
+				.btnBox > button:hover {
+					cursor: pointer;
+					border: 1px solid #333333;
+					transition: all 0.3s;
+				}
+			
+			.contextTemplate {
+				width: 80vw;
+				height: 80vh;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -40vw;
+				margin-top: -40vh;
+			}
+
+			.commentTxt {
+				width: 78vw;
+				height: 6vh;
+				background-color: #206DD5;
+				color: white;
+				border-radius: 3vh 3vh 3vh 0;
+				font-family: 'GangwonEdu_OTFBoldA';
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 6vh;
+				position: absolute;
+				left: 50%;
+				margin-left: -40vw;
+				padding-left: 2vw;
+			}
+
+			.choiceDate {
+				font-size: 4vh;
+				position: absolute;
+				top: 26%;
+				color: rgb(41, 128, 185);
+			}
+
+			.diaryNum {
+				height: 3.5vh;
+				font-size: 3vh;
+				display: block;
+				float: right;
+				margin-top: 10vh;
+				margin-right: -4vw;
+				line-height: 2.5vh;
+				color: white;
+			}
+
+			.numV {
+				font-family: 'RixInooAriDuriR';
+				font-size: 5vh;
+				font-weight: 700;
+				/*color: rgb(211, 156, 16);*/
+				color: rgb(25, 55, 109);
+				margin-right: 8px;
+			}
+
+			.dailyTitle {
+				width: 76vw;
+				height: 3.5vh;
+				background-color: rgba(255, 255, 255, 0.63);
+				border-radius: 2vh;
+				border: none;
+				position: absolute;
+				top: 50%;
+				margin-top: -12vh;
+				padding-top: 2.5vh;
+				padding-bottom: 2vh;
+				padding-left: 2vw;
+				padding-right: 2vw;
+				font-size: 2.7vh;
+				line-height: 3vh;
+				overflow-y: auto;
+				font-weight: 700;
+				overflow-y: auto;
+			}
+
+			.dailyContext {
+				width: 76vw;
+				height: 30vh;
+				background-color: rgba(255, 255, 255, 0.46);
+				border-radius: 2vh;
+				border: none;
+				position: absolute;
+				top: 100%;
+				margin-top: -43vh;
+				padding-top: 2vh;
+				padding-bottom: 11vh;
+				padding-left: 2vw;
+				padding-right: 2vw;
+				font-size: 2.5vh;
+				overflow-y: auto;
+				overflow-x: hidden;
+				line-height: 180%;
+				/*개행과 공백 등이 원래대로 보이도록 처리*/
+				white-space: pre-wrap;
+				word-break: break-all;
+			}
+
+			[id *="1Button"] {
+				border: none;
+				box-shadow: inset -1px -1px 1px gray;
+				/*background-color: transparent;*/
+				background-color: rgb(41, 128, 185);
+				color: white;
+			}
+
+			[id *="Button"]:hover {
+				cursor: pointer;
+				background-color: rgb(70, 159, 214);
+				transition: all 1s;
+			}
+
+			#backButton:hover {
+				border: 1px solid rgba(255, 255, 255, 0.8);
+				cursor: pointer;
+				transition: all 1s;
+			}
+
+			[id *="Button"]:active {
+				background-color: rgb(15, 60, 89);
+			}
+
+			#backButton:active {
+				background-color: none;
+			}
+
+			.backButton {
+				border: none;
+				background-color: #021825;
+				width: 5vw;
+				height: 6vh;
+				border-radius: 0 3vh 3vh 0;
+				font-size: 1.8vw;
+				position: relative;
+				z-index: 1;
+				display: block;
+				float: right;
+			}
+
+			.homeIcon {
+				color: rgba(255, 255, 255, 0.8);
+				margin-top: 2px;
+			}
+
+			.submitButton {
+				width: 10%;
+				height: 8%;
+				border-radius: 2vh;
+				font-size: 1.2vw;
+				position: absolute;
+				top: 100%;
+				margin-top: -8vh;
+				left: 100%;
+				margin-left: -19vw;
+				font-weight: 500;
+			}
+
+			.deleteButton {
+				width: 10%;
+				height: 8%;
+				font-size: 1.2vw;
+				border-radius: 2vh;
+				position: absolute;
+				top: 100%;
+				margin-top: -8vh;
+				left: 100%;
+				margin-left: -10vw;
+			}
+
+			.deleteOption {
+				width: 8vw;
+				height: 6vh;
+				border-radius: 2vh;
+				top: 100%;
+				margin-top: -8vh;
+				left: 100%;
+				margin-left: -10vw;
+			}
+
+			/* 모바일 768px 미만 */
+			@media (max-width: 767px) {
+				.checkBox {
+					width: 250px;
+					height: 150px;
+					background-color: white;
+					border-radius: 2vh;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+					align-items: center;
+					position: absolute;
+					z-index: 1;
+				}
+				.circleZone {
+					width: 30px; height: 30px;
+					background-color: #DADBE7;
+					border-radius: 15px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+					.xi-trash {
+						font-size: 16px;
+						color: white;
+					}
+				.checkBox > h2 {
+					font-size: 15px;
+					color: #333333;
+				}
+				.deleteMsg {
+					font-size: 12px;
+					color: #666666;
+				}
+				.btnBox > button {
+					width: 80px; height: 30px;
+					border-radius: 17.5px;
+					border: none;
+					font-size: 13px;
+				}
+				.yesBtn {
+					background-color: #1A376E;
+					color: white;
+				}
+				.btnBox > button:hover {
+					cursor: pointer;
+					border: 1px solid #333333;
+					transition: all 0.3s;
+				}
+			
+
+				.commentTxt {
+					font-size: 13px;
+				}
+
+				.choiceDate {
+					font-size: 3vh;
+					margin-top: 2%;
+				}
+
+				.countNum {
+					font-size: 10vw;
+				}
+
+				.numV {
+					font-size: 3vh;
+				}
+
+				.diaryNum {
+					font-size: 2vh;
+					margin-top: 8.5vh;
+					float: right;
+					margin-top: 10vh;
+					margin-right: -10vw;
+				}
+
+				.deleteButton {
+					width: 15%;
+					height: 6%;
+					font-size: 2vh;
+					border-radius: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -6vh;
+					left: 100%;
+					margin-left: -18%;
+				}
+
+				.submitButton {
+					width: 15%;
+					height: 6%;
+					border-radius: 2vh;
+					font-size: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -6vh;
+					left: 100%;
+					margin-left: -35%;
+				}
+
+				.dailyTitle {
+					font-size: 15px;
+				}
+
+				.dailyContext {
+					font-size: 15px;
+				}
+
+				.backButton {
+					width: 12vw;
+					height: 6vh;
+				}
+
+				.homeIcon {
+					margin-top: 2px;
+					font-size: 3vh;
+				}
+			}
+
+			/* 태블릿 768px ~ 1024px 사이 */
+			@media (min-width: 768px) and (max-width: 1024px) {
+				.commentTxt {
+					font-size: 2.5vh;
+				}
+
+				.choiceDate {
+					font-size: 3vh;
+					margin-top: 2%;
+				}
+
+				.countNum {
+					font-size: 2.5vw;
+				}
+
+				.countNum {
+					font-size: 2.5vh;
+				}
+
+				.numV {
+					font-size: 5vh;
+				}
+
+				.deleteButton {
+					width: 15%;
+					height: 8%;
+					font-size: 2vh;
+					border-radius: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -8vh;
+					left: 100%;
+					margin-left: -18%;
+				}
+
+				.submitButton {
+					width: 15%;
+					height: 8%;
+					border-radius: 2vh;
+					font-size: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -8vh;
+					left: 100%;
+					margin-left: -35%;
+				}
+
+				[id *="Button"] {
+					font-size: 2vh;
+				}
+
+				.dailyTitle {
+					font-size: 18px;
+				}
+
+				.dailyContext {
+					font-size: 16px;
+					line-height: 180%;
+				}
+
+				.backButton {
+					width: 7vw;
+					height: 6vh;
+				}
+
+				.homeIcon {
+					margin-top: 2px;
+					font-size: 4vh;
+				}
+
+			}
+		</style>
+</head>
+
+<body>
+	<!--daily diary 큰 틀-->
+	<div id="dailyDiary" class="dailyDiary">
+		<!--view board-->
+		<div id="tempDiary" class="tempDiary">
+			<!--웹페이지 콘텐츠 틀-->
+			<div id="contextTemplate" class="contextTemplate">
+				<div id="countNum" class="countNum">
+					<h3 class="commentTxt">오늘, 당신이 기록하고 싶은 일기는 무엇인가요?</h3>
+					<button id="backButton" class="backButton" type="button" ><i class="xi-home-o homeIcon"></i></button>
+				</div>
+
+
+				<h4 id="choiceDate" class="choiceDate"></h4>
+
+
+				<div id="diaryNum" class="diaryNum"><span id="numV" class="numV"></span>번째 일기</div>
+
+
+				<!--일기 제목& 내용 넣는 틀-->
+				<div class="temp_diary">
+					<div id="dailyTitle" class="dailyTitle"></div>
+					<div id="dailyContext" class="dailyContext"></div>
+					<div id="updateOption"></div>
+					<div id="deleteOption" class="deleteOption"></div>
+				</div>
+				<!--END 일기 제목 & 내용 넣는 틀-->
+			</div>
+			<!--END 웹페이지 콘텐츠 틀 -->
+		</div>
+		<!--end tempDiary-->
+	</div>
+	<!--end daily diary 큰 틀-->
+	<script>
+		class ReadPage {
+			constructor(idV, jsonAddress) {
+				this.idV = idV;
+				this.jsonAddress = jsonAddress;
+
+				this.playAjax();
+			}
+			//====properties====
+			jsonData = {};
+			urlQuery = window.location.search;
+			paramInfo = new URLSearchParams(this.urlQuery);
+			idInfo = this.paramInfo.get('id');
+			//==END properties==
+
+
+			//method1. json데이터 
+			playAjax() {
+				const xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = () => {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+						this.jsonData = JSON.parse(xhttp.responseText);
+						//console.log(this.jsonData);
+
+						//작성 날짜 순으로 정리 sort
+						const orderedDate = this.jsonData["diaryInfo"].sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+
+						//함수 실행부
+						this.printSection(orderedDate);
+						this.makeDeleteBtn();
+						this.makeUpdateBtn();
+						this.playHomeBtn(orderedDate);
+					}
+				}
+				xhttp.open('GET', this.jsonAddress + "?t=" + Math.random(), true);
+				xhttp.send();
+			}//playAjax()
+
+			//method2. 기본 출력부
+			printSection(jsonData) {
+				const weekLabel = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+				document.getElementById("numV").innerHTML = "";
+				jsonData.forEach((dailyInfo, diaryId) => {
+					if (dailyInfo["id"] == this.idInfo) {
+						document.getElementById("numV").innerHTML = jsonData.length - diaryId;
+						//날짜 요일 출력 getDay() => 요일을 구하는 함수
+						const todayDate = new Date(dailyInfo["created_date"]).getDay();
+						const todayLabel = weekLabel[todayDate];
+						//console.log(todayLabel);
+
+						document.getElementById("choiceDate").innerHTML = dailyInfo["created_date"].slice(0, 4) + "년 " + dailyInfo["created_date"].slice(5, 7) + "월 " + dailyInfo["created_date"].slice(8, 10) + "일 " + todayLabel;
+						document.getElementById("dailyTitle").innerText = dailyInfo["diary_title"];
+						document.getElementById("dailyContext").innerText = dailyInfo["diary_contents"];
+					}
+				});//forEach()
+			}//printSection
+
+			//method3. 수정버튼 (update 페이지로 id 가지고 이동)
+			makeUpdateBtn() {
+				document.getElementById("updateOption").innerHTML += ` 
+					<button type="submit" id="submit1Button" class="submitButton" onClick="location.href='./diary_updatePage.html?id=${this.idInfo}'">수정</button>
+			`;
+			}//makeUpdateBtn()	
+
+			//method4. 삭제버튼 
+			makeDeleteBtn() {
+				document.getElementById("deleteOption").innerHTML += `	
+					<button id="delete1Button" class="deleteButton">삭제</button>
+				`;
+
+				document.getElementById("deleteOption").addEventListener("click", () => {
+					
+					document.getElementById("dailyDiary").innerHTML += `
+						<div class="backColor"></div>
+						<div class="checkBox">
+							<div class="circleZone"><i class="xi-trash"></i></div>
+							<h2>일기를 삭제하시겠습니까?</h2>
+							<div class="deleteMsg">이 일기의 데이터가 완전히 삭제됩니다.</div>
+							
+							<div class=btnBox>
+								<button class="yesBtn" onClick="location.href='http://kkms4001.iptime.org:10042/diaryApp/delete/${this.idInfo}'">삭제</button>
+								<button class="cancelBtn" onClick="location.href='./diary_readPage.html?id=${this.idInfo}'">취소</button>
+							</div>
+						</div>
+					`
+				});
+
+			}//makeDeleteBtn()
+
+			//홈버튼 누를 시 원래 보던 날짜 페이지가 나타나게 하기
+			playHomeBtn(jsonData) {
+				const backBtn = document.querySelector("#backButton");
+
+				backBtn.addEventListener("click", () => {
+					jsonData.forEach((dailyInfo, diaryId) => {
+						let createdDate = dailyInfo["created_date"];
+						let cutDate = createdDate.slice(0, 7);
+						if (this.idInfo == dailyInfo["id"]) {
+							window.location.href = "./diary_mainPage.html?date=" + cutDate;
+						}
+					});
+				});
+
+			}//playHomeBtn();
+
+		}//END readPage{}
+
+		(main = () => {
+			const readPage = new ReadPage("diary1", '../project_backEnd/diaryData.json');
+		})();
+	</script>
+</body>
+
+</html>

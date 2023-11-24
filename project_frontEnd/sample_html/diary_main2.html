@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">	
+		<!--xeicon-->
+		<link ="stylesheet" type="text/css" href="path/to/xeicon/xeicon.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+		<title>당신이 기록하고 싶은 일기는 무엇인가요?</title>
+		<style>
+			*{ margin: 0; padding: 0;
+				font-family: 'Nanum Gothic', sans-serif;
+				color: #333333;
+				list-style-type: none;
+			}
+
+			/*날짜 폰트*/
+			@font-face {
+				font-family: 'BookkMyungjo-Bd';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+				font-weight: 900;
+				font-style: normal;
+			}
+			@font-face {
+   				font-family: 'GangwonEdu_OTFBoldA';
+    			src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+    			font-weight: normal;
+    			font-style: normal;
+			}
+			/* daily diary 큰 틀 */
+			.dailyDiary {
+				width: 100vw; height: 100vh;
+				background-color: rgba(131, 196, 238, 0.54);
+				/*
+				background: linear-gradient(45deg, rgba(41, 83, 111, 0.2), rgba(52, 152, 219, 0.2);
+				background: linear-gradient(45deg, Violet, Orange); 
+				*/
+			}
+
+			/* view board */
+			.tempDiary {
+				width: 90vw; height: 90vh;
+				background: rgba(255, 255, 255, 0.3 );
+				border-radius: 5vh;
+				position: absolute;
+				left: 50%; top: 50%;
+				margin-left: -45vw; margin-top: -45vh;
+
+			}
+			.commentTxt {
+				font-family: 'GangwonEdu_OTFBoldA';
+			}
+
+			/*캘린더 포함 LEFT ZONE*/
+			.selectCalender {
+				width: 40vw; height: 80vh;
+				/*background: skyblue;*/
+			}
+			/*저장된 일기 리스트 RIGHT ZONE*/
+			.diaryList {
+				width: 40vw; height: 80vh;
+				/*background: lightgray;*/
+				display: block;
+			}
+			
+			.dailyContents {
+				overflow-y: auto;
+			}
+			.titleInfo {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			/*'+' 버튼 디자인*/
+			#plusWrite {
+				width: 150px; height: 50px;
+				border-radius: 10px;
+				border: none;
+				box-shadow: inset -1px -1px 1px gray; 
+				background-color: rgb(41, 128, 185);
+				font-size: 20px;
+				color: white;
+			}		
+			.xi-plus { color: white; }
+			#plusWrite:active { background-color: rgb(17, 55, 79);}
+
+			#currentMonth {
+				font-weight: 700;
+				border: none;
+				background-color: transparent;
+			}
+
+			/* 모바일 768px 미만 */
+			@media (max-width: 768px){
+				.dailyDiary {
+					height: 200vh;
+					position: relative;
+				}
+
+				.tempDiary {
+					height: 190vh;
+					position: absolute;
+					top: 50%; margin-top: -95vh;
+				}	
+				
+				.selectCalender {
+					width: 80vw; height: 90vh;
+					position: absolute;
+					left: 50%; margin-left: -40vw;
+					top: 5vh;
+				}
+					.commentTxt {
+						width: 70vw;
+						font-weight: 400; 
+						font-size: 4.5vw; 
+						position: absolute;
+						left: 50%; margin-left: -32.5vw; 
+						top: 50%; margin-top: -30vw;
+					}
+
+					.peopleImg {
+						width: 45vw; height: 45vw;
+						position: absolute;
+						top: 100%; margin-top: -55vw;
+						left: -2vw;
+					}
+				
+					#plusWrite {
+						position: absolute;
+						left: 50%; margin-left: -75px;
+						top: 50%; 
+					}
+
+				.diaryList {
+					width: 80vw; height: 90vh;
+					position: absolute;
+					top: 100%; margin-top: -95vh;
+					left: 50%; margin-left: -40vw;
+				}
+				.dailyContents {
+					width: 80vw; height: 80vh;
+					position: absolute; 
+					top: 10vw;
+				}
+					.choseDate {
+						width: 36vw;
+						font-weight: 700;
+						font-size: 5vw;
+						position: absolute;
+						top: 2vw;
+						left: 50%; margin-left: -18vw; 
+						color: rgb(41, 128, 185);
+					}
+
+				.dayBookList {
+					width: 70vw; height: 10vh;
+					background: rgba(255, 255, 255, 0.74);
+					border-radius: 2vw;
+					text-align: center;
+					margin: 0 auto;
+					margin-top: 2vw;
+					position: relative;
+				}
+
+				.dateInfo { 
+					font-family: 'BookkMyungjo-Bd';
+					width: 10vw; height: 10vh; 
+					position: absolute;
+					font-size: 2.5vh;
+					top: 50%; margin-top: -1.25vh; 
+					margin-left: 2vw;
+				}
+				.titleInfo {
+					width: 48vw; height: 10vh;
+					margin-left: 2vw;
+					position: absolute;
+					left: 100%; margin-left: -50vw; 
+					top: 50%; margin-top: -1vh;
+					font-size: 2vh;	
+				}
+			}	
+
+			/* 태블릿 768px ~ 1024px 사이 */
+			@media (min-width: 768px) and (max-width: 1024px) {
+				.selectCalender {
+					width: 40vw; height: 80vh;
+					position: absolute;
+					left: 50%; margin-left: -40vw;
+					top: 5vh;
+				}
+					.commentTxt {
+						font-weight: 400; 
+						font-size: 2.5vw; 
+						position: absolute;
+						top: 50%; margin-top: -10vw;
+					}
+					.peopleImg {
+						width: 25vw; height: 25vw;
+						position: absolute;
+						top: 100%; margin-top: -25vw;
+						left: -2vw;
+					}
+
+				.diaryList {
+					width: 40vw; height: 80vh;
+					position: inline-block;
+					float: left;
+					position: absolute;
+					top: 5vh;
+					left: 50%; 
+				}
+					.dailyContents {
+						width: 40vw; height: 70vh;
+						position: absolute;
+						top: 5vw;
+					}
+					
+					.choseDate {
+						width: 18vw;
+						font-weight: 700;
+						font-size: 2.5vw;
+						color: rgb(41, 128, 185);
+						position: absolute;
+					}
+
+					.dayBookList {
+						width: 40vw; height: 7vh;
+						background: rgba(255, 255, 255, 0.74);
+						border-radius: 1vw;
+						margin: 0 auto;
+						margin-top: 2vw;
+						position: relative;
+					}
+						.dateInfo { 
+							font-family: 'BookkMyungjo-Bd';
+							width: 10vw; height: 10vh; 
+							position: absolute;
+							font-size: 2vh;
+							top: 50%; margin-top: -1vh; 
+							margin-left: 2vw;
+						}
+						.titleInfo {
+							width: 30vw; height: 10vh;
+							margin-left: 2vw;
+							position: absolute;
+							left: 100%; margin-left: -32vw; 
+							top: 50%; margin-top: -1vh;
+							font-size: 2vh;	
+						}
+					#plusWrite {
+						position: absolute;
+						left: 50%; margin-left: -85px;
+						top: 50%; margin-top: 25px;
+					}	
+			}
+
+			/* 데스크탑 1024px 이상 */
+			@media (min-width: 1025px) {
+				.selectCalender {
+					width: 40vw; height: 80vh;
+					position: absolute;
+					left: 50%; margin-left: -40vw;
+					top: 5vh;
+				}
+					.commentTxt {
+						font-size: 2.5vw; 
+						position: absolute;
+						top: 50%; margin-top: -10vw;
+					}
+					.peopleImg {
+						width: 20vw; height: 20vw;
+						position: absolute;
+						top: 100%; margin-top: -20vw;
+						left: -2vw;
+					}
+
+				.diaryList {
+					width: 40vw; height: 80vh;
+					position: inline-block;
+					float: left;
+					position: absolute;
+					top: 5vh;
+					left: 50%; 
+				}
+					.dailyContents {
+						width: 40vw; height: 70vh;
+						position: absolute;
+						top: 3vw;
+					}
+					.choseDate {
+						width: 16.5vw;
+						font-weight: 700;
+						font-size: 2.3vw;
+						position: relative;
+						color: rgb(41, 128, 185);
+					}
+
+
+					.dayBookList {
+						width: 40vw; height: 7vh;
+						background: rgba(255, 255, 255, 0.74);
+						border-radius: 1vw;
+						margin: 0 auto;
+						margin-top: 2vw;
+						position: relative;
+					}
+						.dateInfo { 
+							font-family: 'BookkMyungjo-Bd';
+							width: 10vw; height: 10vh; 
+							position: absolute;
+							font-size: 2vh;
+							top: 50%; margin-top: -1vh; 
+							margin-left: 2vw;
+						}
+						.titleInfo {
+							width: 30vw; height: 10vh;
+							margin-left: 2vw;
+							position: absolute;
+							left: 100%; margin-left: -32vw; 
+							top: 50%; margin-top: -1vh;
+							font-size: 2vh;	
+						}
+					#plusWrite {
+						position: absolute;
+						left: 50%; margin-left: -85px;
+						top: 50%;  
+					}		
+
+			}
+
+		</style>
+	</head>
+	
+	<body>
+		<!--daily diary 큰 틀-->
+		<div id="dailyDiary" class="dailyDiary">
+
+			<!--view board-->
+			<div id="tempDiary" class="tempDiary">
+				
+				<!--LEFT ZONE-->
+				<div id="selectCalender" class="selectCalender">
+	
+					<div class="sortZone">
+						<h3 class="commentTxt">오늘, <br>당신이 기록하고 싶은 일기는 무엇인가요?</h3>
+						<img class="peopleImg" src="./people.png" alt="readingbook">
+						<button type="button" id="plusWrite" onClick="location.href='http://kkms4001.iptime.org/~c18st04/project_diary/project_frontEnd/diary_writePage.html'">
+							<i class="xi-plus"></i> 작성하기
+						</button>
+					</div>
+				</div>
+				
+				<!--저장된 일기 리스트 RIGHT ZONE-->
+					<div id="diaryList" class="diaryList">
+						<input type="month" name="choseDate" id="currentMonth" class="choseDate">
+						<input type="submit" id="submitMonth" onClick=" AjaxJson.selectDate();" value="확인">
+				<!--	
+					<a href='http://kkms4001.iptime.org:10042/diaryApp/read'>제출하기</a>
+					
+					<div class="dailyContents" >	
+						<ul id="1dayBookList" class="dayBookList">
+							<li id="dateInfo1" class="dateInfo">0829</li>
+							<li id="titleInfo1" class="titleInfo">몇달동안 고뇌하던 맥북을 드디어 내 손에 넣었다..!</li>
+						</ul>
+						<ul id="2dayBookList" class="dayBookList">
+							<li id="dateInfo2" class="dateInfo">0828</li>
+							<li id="titleInfo2" class="titleInfo">자취한지 세달째 나의 변화</li>
+						</ul>
+					
+						<ul id="3dayBookList" class="dayBookList">
+							<li id="dateInfo3" class="dateInfo">0827</li>
+							<li id="titleInfo3" class="titleInfo">날씨는 흐리지만 기분 좋은 날</li>
+						</ul>
+						
+						<ul id="4dayBookList" class="dayBookList">
+							<li id="dateInfo4" class="dateInfo">0824</li>
+							<li id="titleInfo4" class="titleInfo">알찬 주말을 위해 열공했다</li>
+						</ul>
+						
+						<ul id="5dayBookList" class="dayBookList">
+							<li id="dateInfo5" class="dateInfo">0820</li>
+							<li id="titleInfo5" class="titleInfo">가족과 옹기종기 알찬 시간을 보냈다</li>
+						</ul>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+					</div>
+					-->
+				</div>
+
+				<!--END diaryList-->
+				
+			</div>
+			<!--end view board-->
+		</div>
+		<!--end daily diary 큰 틀-->
+	<script>
+		class AjaxJson {
+			contructor() {}
+
+			static templateList (dateInfo, titleInfo) {
+				return document.getElementById("diaryList").innerHTML +=```
+					<ul class="dayBookList">
+						<li class="dateInfo">${dateInfo}</li>
+						<li class="titleInfo">${titleInfo}</li>
+					</ul>
+				```
+			}
+
+			static playAjax() {
+				//document.getElementById("diaryList").innerHtml = ;
+				const xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function () {
+					if(this.readyState == 4 && this.status == 200) {
+						//console.log(JSON.parse(xhttp.responseText));	
+						const data_object = JSON.parse(xhttp.responseText);
+						//console.log(data_object["diaryInfo"]);
+						for (let i=0; i<data_object["diaryInfo"].length; i++) {
+							const dateInfo = data_object["diaryInfo"][i]["created_date"];
+							const date_arr = dateInfo.split("-");
+							console.log(date_arr[0]);
+						}
+					}
+				}
+				xhttp.open('GET', '../project_backEnd/diaryData.json', true);
+				xhttp.send();
+			}//playAjax()
+			
+			static selectDate() {
+				const choseDate = document.querySelector("#currentMonth").value;
+				console.log(choseDate);
+			}
+		}//AjaxJson{}
+
+		//main page 년,월 선택하는 calender 클래스
+		class MonthCalender {
+			constructor ( idV ) {
+				this.idV = idV;
+			}
+			todayMonth = new Date().toISOString().slice(0, 7);
+
+			//현재 날짜 출력하는 메소드	
+			currentMonth () {
+				document.getElementById(this.idV).value = this.todayMonth;
+			}//currentMonth()
+			
+			//현재 월 제한 메소드
+			limitMonth () {
+				//document.getElementById(this.idV).setAttribute("min", this.todayMonth);
+				document.getElementById(this.idV).setAttribute("max", this.todayMonth);
+			}
+		}//MonthCalender
+
+		(main = () => {
+			const monthCalender = new MonthCalender('currentMonth');
+			monthCalender.currentMonth();
+			monthCalender.limitMonth();
+
+			AjaxJson.playAjax();
+			
+		})();
+	</script>
+	</body>
+</html>

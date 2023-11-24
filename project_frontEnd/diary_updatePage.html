@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="icon" href="./pngFile/studying.png" type="image/x-icon">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+	<!--xeicon-->
+	<link="stylesheet" type="text/css" href="path/to/xeicon/xeicon.min.css">
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+		<title>My diary</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				font-family: 'Nanum Gothic', sans-serif;
+				color: #333333;
+			}
+
+			/*날짜 폰트*/
+			@font-face {
+				font-family: 'BookkMyungjo-Bd';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
+				font-weight: 900;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'GangwonEdu_OTFBoldA';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			/*다이어리 번호 폰트*/
+			@font-face {
+				font-family: 'RixInooAriDuriR';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			@font-face {
+				font-family: 'Cafe24ClassicType-Regular';
+				src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Cafe24ClassicType-Regular.woff2') format('woff2');
+				font-weight: normal;
+				font-style: normal;
+			}
+
+			/* daily diary 큰 틀 */
+			.dailyDiary {
+				width: 100vw;
+				height: 100vh;
+				position: relative;
+				background: linear-gradient(45deg, rgba(41, 83, 111, 0.2), rgba(52, 152, 219, 0.2));
+				background: linear-gradient(331deg, rgba(195, 193, 240, 1) 0%, rgba(76, 136, 222, 1) 100%, rgba(255, 255, 255, 0.7359331109550562) 100%);
+
+				/*
+				background: linear-gradient(45deg, Violet, Orange); 
+				*/
+			}
+
+			/* view board */
+			.tempDiary {
+				width: 90vw;
+				height: 90vh;
+				background-color: rgba(255, 255, 255, 0.25);
+				box-shadow: 2px 2px 2px rgba(235, 235, 235, 0.2);
+				border-radius: 5vh;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -45vw;
+				margin-top: -45vh;
+			}
+
+			.contextTemplate {
+				width: 80vw;
+				height: 80vh;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -40vw;
+				margin-top: -40vh;
+			}
+
+			.commentTxt {
+				width: 78vw;
+				height: 6vh;
+				background-color: #206DD5;
+				color: white;
+				border-radius: 3vh 3vh 3vh 0;
+				font-family: 'GangwonEdu_OTFBoldA';
+				font-weight: 400;
+				font-size: 20px;
+				line-height: 6vh;
+				position: absolute;
+				left: 50%;
+				margin-left: -40vw;
+				padding-left: 2vw;
+			}
+
+			.choiceDate {
+				font-size: 4vh;
+				position: absolute;
+				top: 22vh;
+				color: rgb(41, 128, 185);
+			}
+
+			.diaryNum {
+				height: 3.5vh;
+				font-size: 3vh;
+				display: block;
+				float: right;
+				margin-top: 10vh;
+				margin-right: 1vw;
+				line-height: 2.5vh;
+				color: #E8EBF5;
+			}
+
+			.numV {
+				font-family: 'RixInooAriDuriR';
+				font-size: 2.5vw;
+				font-weight: 700;
+				color: rgb(25, 55, 109);
+				margin-right: 8px;
+			}
+
+			.dailyTitle {
+				width: 76vw;
+				height: 4vh;
+				background-color: rgba(255, 255, 255, 0.63);
+				border-radius: 2vh;
+				border: none;
+				position: absolute;
+				top: 50%;
+				margin-top: -12vh;
+				padding-top: 2vh;
+				padding-bottom: 2vh;
+				padding-left: 2vw;
+				padding-right: 2vw;
+				font-size: 2.7vh;
+				font-weight: 700;
+			}
+
+			.dailyContext {
+				width: 76vw;
+				height: 33vh;
+				background-color: rgba(255, 255, 255, 0.46);
+				border-radius: 2vh;
+				border: none;
+				position: absolute;
+				top: 100%;
+				margin-top: -43vh;
+				padding-top: 2vh;
+				padding-bottom: 8vh;
+				padding-left: 2vw;
+				padding-right: 2vw;
+				font-size: 1.3vw;
+				line-height: 180%;
+				overflow-y: auto;
+			}
+
+			[id *="Button"] {
+				border: none;
+				box-shadow: inset -1px -1px 1px gray;
+				background-color: rgb(41, 128, 185);
+				color: white;
+			}
+
+			[id *="Button"]:hover {
+				cursor: pointer;
+				background-color: rgb(70, 159, 214);
+				transition: all 1s;
+			}
+
+			[id *="Button"]:active {
+				background-color: rgb(15, 60, 89);
+			}
+
+			.submitButton {
+				width: 10%;
+				height: 8%;
+				border-radius: 2vh;
+				font-size: 1.2vw;
+				position: absolute;
+				top: 100%;
+				margin-top: -8vh;
+				left: 100%;
+				margin-left: -18vw;
+				font-weight: 500;
+			}
+
+			.deleteButton {
+				width: 9%;
+				height: 7%;
+				font-size: 1.2vw;
+				border-radius: 2vh;
+				position: absolute;
+				top: 100%;
+				margin-top: -13vh;
+				left: 100%;
+				margin-left: -16%;
+			}
+
+			/* 모바일 768px 미만 */
+			@media (max-width: 767px) {
+				.commentTxt {
+					font-size: 2.2vh;
+				}
+
+				.choiceDate {
+					font-size: 3vh;
+				}
+
+				.countNum {
+					font-size: 2.5vw;
+				}
+
+				.diaryNum {
+					font-size: 2vh;
+					margin-top: 8.5vh;
+				}
+
+				.numV {
+					font-size: 3vh;
+				}
+
+				.deleteButton {
+					width: 13%;
+					height: 5%;
+					font-size: 2vh;
+					border-radius: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -11vh;
+					left: 100%;
+					margin-left: -21.5%;
+				}
+
+				.submitButton {
+					width: 15%;
+					height: 5.7%;
+					border-radius: 2vh;
+					font-size: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -6vh;
+					left: 100%;
+					margin-left: -35%;
+				}
+
+				.dailyTitle {
+					font-size: 15px;
+				}
+
+				.dailyContext {
+					font-size: 15px;
+				}
+			}
+
+			/* 태블릿 768px ~ 1024px 사이 */
+			@media (min-width: 768px) and (max-width: 1024px) {
+				.commentTxt {
+					font-size: 2.5vh;
+				}
+
+				.choiceDate {
+					font-size: 3vh;
+				}
+
+				.countNum {
+					font-size: 2.5vw;
+				}
+
+				.diaryNum {
+					font-size: 3vh;
+				}
+
+				.numV {
+					font-size: 5vh;
+				}
+
+				.deleteButton {
+					width: 13%;
+					height: 7%;
+					font-size: 2vh;
+					border-radius: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -13vh;
+					left: 100%;
+					margin-left: -21.5%;
+				}
+
+				.submitButton {
+					width: 15%;
+					height: 8%;
+					border-radius: 2vh;
+					font-size: 2vh;
+					position: absolute;
+					top: 100%;
+					margin-top: -8vh;
+					left: 100%;
+					margin-left: -35%;
+				}
+
+				.dailyTitle {
+					font-size: 18px;
+				}
+
+				.dailyContext {
+					font-size: 16px;
+					line-height: 180%;
+				}
+			}
+		</style>
+</head>
+
+<body>
+	<!--daily diary 큰 틀-->
+	<div id="dailyDiary" class="dailyDiary">
+		<!--view board-->
+		<div id="tempDiary" class="tempDiary">
+			<!--context template-->
+			<div id="contextTemplate" class="contextTemplate">
+				<!--title-->
+				<h3 class="commentTxt">오늘, 당신이 기록하고 싶은 일기는 무엇인가요?</h3>
+				<!--choseDate-->
+				<h4 id="choiceDate" class="choiceDate"></h4>
+				<!--count diaryNum-->
+
+				<div id="diaryNum" class="diaryNum"><span id="numV" class="numV"></span>번째 일기</div>
+
+				<!--CHECK! 이 섹션은 수정버튼이 눌리고 -->
+				<!--data submit form section-->
+				<form name="frmSubmit">
+					<input id="dailyTitle" class="dailyTitle" type="text" name="dailyTitle" autocomplete='off'>
+
+					<textarea id="dailyContext" class="dailyContext" type="text"  name="dailyContext" autocomplete='off'
+						placeholder="context"></textarea>
+					<div id="submitInfo"></div>
+					<!--	
+							<button type="submit" id="submitButton" class="submitButton">확인</button>
+						-->
+			</div>
+			</form>
+
+			<div id="buttonInfo"></div>
+			<!--END data submit form section-->
+
+
+		</div>
+		<!--END contextTemplate-->
+	</div>
+	<!--end tempDiary-->
+	</div>
+	<!--end daily diary 큰 틀-->
+	<script>
+		class UpdatePage {
+			constructor(diaryId, jsonAddress) {
+				this.diaryId = diaryId;
+				this.jsonAddress = jsonAddress;
+
+				this.playAjax();
+			}
+			//====properties====
+			jsonData = {};
+			urlQuery = window.location.search;
+			paramInfo = new URLSearchParams(this.urlQuery);
+			idInfo = this.paramInfo.get('id');
+			//==END properties==
+
+
+			//json데이터 다루는 메소드
+			playAjax() {
+				const xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = () => {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+						this.jsonData = JSON.parse(xhttp.responseText);
+						//console.log(this.jsonData);
+
+						//작성 날짜 순으로 정리 sort
+						const orderedDate = this.jsonData["diaryInfo"].sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+
+						//함수 실행부
+						this.movePreviousPage();
+						this.readInfo(orderedDate);
+						this.showUpdate();
+					}
+				}
+				xhttp.open('GET', this.jsonAddress + "?t=" + Math.random(), true);
+				xhttp.send();
+			}//playAjax()
+
+
+			//read 날짜, 제목, 내용 자료 input에 value로 기본 입력 값 지정 메소드 (url id 참조)
+			readInfo(jsonData) {
+				document.getElementById("numV").innerHTML = "";
+
+				const dailyTitle = document.getElementById("dailyTitle");
+				const dailyContext = document.getElementById("dailyContext");
+				const choiceDate = document.getElementById("choiceDate");
+				//요일 배열
+				const weekLabel = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+
+				jsonData.forEach((dailyInfo, diaryId) => {
+					if (dailyInfo["id"] == this.idInfo) {
+						document.getElementById("numV").innerHTML = jsonData.length - diaryId;
+
+						//날짜 요일 출력 getDay() => 요일을 구하는 함수
+						const todayDate = new Date(dailyInfo["created_date"]).getDay();
+						const todayLabel = weekLabel[todayDate];
+						//console.log(todayLabel);
+
+						choiceDate.innerHTML = dailyInfo["created_date"].slice(0, 4) + "년 " + dailyInfo["created_date"].slice(5, 7) + "월 " + dailyInfo["created_date"].slice(8, 10) + "일 " + todayLabel;
+						dailyTitle.value = `${dailyInfo['diary_title']}`;
+						dailyContext.value = `${dailyInfo['diary_contents']}`;
+					}
+				});
+			}//readInfo
+
+
+			//확인 버튼 클릭시 수정값이 백단으로 넘어감 (=> 백단에선 데이터 수정 후 id 값에 맞는 read페이지 불러줌)
+			showUpdate() {
+				document.getElementById("submitInfo").innerHTML = `<button type="submit" id="submitButton" class="submitButton">확인</button>`;
+				const sendForm = document.frmSubmit;
+				sendForm.method = "POST";
+				sendForm.action = `http://kkms4001.iptime.org:10042/diaryApp/update1/${this.idInfo}/`
+			}//showUpdate()
+
+
+			//취소 버튼 클릭시 이전 read페이지로 돌아감
+			movePreviousPage() {
+				document.getElementById("buttonInfo").innerHTML = `
+						<button id="deleteButton" class="deleteButton" onClick="location.href='./diary_readPage.html?id=${this.idInfo}'">취소</button>
+				`;
+			}//movePreviousPage()
+		}//UpdatePage{}
+
+		(main = () => {
+			const updatePage = new UpdatePage("diary1", "../project_backEnd/diaryData.json");
+		})();
+	</script>
+</body>
+
+</html>
